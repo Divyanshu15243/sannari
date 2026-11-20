@@ -1,4 +1,4 @@
-# Mayuri House: React storefront UI
+# Sannari: React storefront UI
 
 A modern, UI-only ethnic-wear storefront built with **React 19 + Vite + React Router + lucide-react**.
 There is no backend: the bag, wishlist and forms work in memory only, for demo purposes.

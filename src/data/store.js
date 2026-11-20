@@ -1,12 +1,12 @@
 // ─── Brand settings: change these to your own ───
 export const BRAND = {
-  name: 'Mayuri House',
+  name: 'Sannari',
   tagline: 'Indian Couture',
   phone: '+91 90000 00000',
   whatsapp: '919000000000',
-  email: 'care@mayurihouse.in',
+  email: 'care@sannari.in',
   city: 'Surat, Gujarat',
-  instagram: '@mayurihouse',
+  instagram: '@sannari',
 };
 
 // ─── Sample catalogue (UI demo data) ───
