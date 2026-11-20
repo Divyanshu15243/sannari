@@ -1,9 +1,45 @@
-import { useId } from 'react';
+import { useId, useState } from 'react';
 
-// Illustrated placeholder for product photos. Swap for <img src={product.image} /> once you have real photos.
-const VIEWS = ['0 0 300 400', '45 160 210 240', '70 24 160 160', '0 0 300 400'];
+// Free stock photos from Unsplash (Unsplash License: free for commercial use, no attribution required).
+// Stored in /public/images. Replace with your real product photos: set product.image, or edit these pools.
+const PHOTOS = {
+  lehenga: [1, 2, 3, 4, 5, 6],
+  'ready-to-wear': [2, 3, 5, 6, 4, 1],
+  'indo-western': [9, 8, 7, 10],
+  western: [9, 10, 8, 7],
+  saree: [7, 8, 10, 4],
+};
+// Different crops per view, so gallery thumbnails don't look identical
+const POSITIONS = ['50% 30%', '50% 75%', '50% 15%', '50% 50%'];
+
+function productPhoto(product, view = 0) {
+  if (product.image) return product.image;
+  const pool = PHOTOS[product.type] || PHOTOS.lehenga;
+  return `/images/photo-${pool[(product.id + view) % pool.length]}.jpg`;
+}
 
 export default function ProductArt({ product, view = 0 }) {
+  const [failed, setFailed] = useState(false);
+  if (!failed) {
+    return (
+      <img
+        className="art"
+        src={productPhoto(product, view)}
+        alt={product.name}
+        loading="lazy"
+        decoding="async"
+        onError={() => setFailed(true)}
+        style={{ objectFit: 'cover', objectPosition: POSITIONS[view] || 'center', display: 'block' }}
+      />
+    );
+  }
+  return <ProductIllustration product={product} view={view} />;
+}
+
+// Illustrated fallback, shown if a photo fails to load
+const VIEWS = ['0 0 300 400', '45 160 210 240', '70 24 160 160', '0 0 300 400'];
+
+function ProductIllustration({ product, view = 0 }) {
   const id = useId().replace(/:/g, '');
   const { c1: c, c2: a, type: t } = product;
   const bg = view === 3 ? `color-mix(in srgb, ${a} 24%, #fff)` : `color-mix(in srgb, ${c} 14%, #fbf6f3)`;
